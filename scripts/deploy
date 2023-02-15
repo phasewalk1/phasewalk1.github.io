@@ -1,0 +1,149 @@
+#!/usr/bin/env python3
+#
+# The MIT License (MIT)
+#
+# Copyright (c) 2022 M E Leypold
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of
+# this software and associated documentation files (the "Software"), to deal in
+# the Software without restriction, including without limitation the rights to
+# use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+# the Software, and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+# FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+# COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+# IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+"""Deploy Hugo Site
+
+Usage:
+  scripts/deploy [-T]
+  scripts/deploy -P
+
+Options:
+  -T  Deploy to testing site
+  -P  Deploy to production site
+
+The target sites will be read from config.toml (this is hardcoded for
+the moment), e.g
+
+  [deployment]
+    testing    = "/srv/http/bm-testing"
+    production = "rsync://www.glitzersachen.de/var/www/html/brutalist-minimalist"
+
+The protocol prefix designates the transport mechanism used. If there
+is no prefix, rsync between local directories is used. Available transports:
+
+  - rsync: do rsync to the given target
+
+Source directory is always 'public' -- this is also hardcoded for the moment.
+"""
+
+
+import sys
+import logging
+from docopt import docopt
+import toml
+import os
+import shutil
+import subprocess
+
+def cmd(cmdline):
+    info(F'running {cmdline = }')
+    subprocess.run(
+        cmdline,
+        check = True
+    )
+    
+
+class Transporter:
+    def __init__(self, target):
+        self.target = target
+        
+class RsyncTransporter(Transporter):
+    def sync(self):
+        cmd(['rsync', '-r', '--delete', 'public/', self.target])
+
+class RsyncOverSsh(RsyncTransporter):
+    pass
+
+class LocalRsync(RsyncTransporter):
+    pass
+
+
+protocols =  {
+    'rsync' : RsyncOverSsh,
+    'local' : LocalRsync
+}
+
+info  = logging.info
+error = logging.error
+
+def panic(msg):
+    error(msg)
+    print(F"{sys.argv[0]}: {msg}", file=sys.stderr)
+    print(F"{sys.argv[0]}: ABORTING.")
+    exit(1)
+
+def main():
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format='=> {levelname} {message}', datefmt='%m/%d/%Y %I:%M:%S %p',
+        style='{'
+    )
+    
+    args = docopt(__doc__, version='scripts/deploy 0.1.0')
+    production_target = args['-P']
+    config = toml.load("config.toml")
+    if production_target:
+        target = config['deployment']['production']
+    else:
+        target = config['deployment']['testing']
+
+    info(F'{target = }')
+    
+    try:
+        i = target.index("://")
+    except ValueError:
+        i = None
+
+    if i is None:
+        info(F"No transport specified. Using 'local'")
+        transport  = 'local'
+        target_dir = target
+    else:
+        transport  = target[:i]
+        target_dir = target[i+3:]
+
+    info(F"{transport  = }")
+    info(F"{target_dir = }")
+
+    if not transport in protocols:
+        panic(F"protocol/transport '{transport}' not known. Target was '{target}'")
+
+    transporter = protocols[transport](target_dir)
+
+    info("cleaning and rebuilding public/")
+    
+    if os.path.isdir("public"):
+        shutil.rmtree("public")
+    
+    subprocess.run(["hugo"], check=True)
+
+    info(F"syncing to '{target}'")
+
+    transporter.sync()
+    
+    info("OK")
+    
+if __name__ == '__main__':
+    main()

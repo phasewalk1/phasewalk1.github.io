@@ -1,0 +1,4 @@
+hugo server -D --buildFuture --disableFastRender &
+sleep 2 # pretty ad-hoc
+firefox http://localhost:1313/ &
+

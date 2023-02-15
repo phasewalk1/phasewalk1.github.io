@@ -1,0 +1,3 @@
+[submodule "themes/hugo-brutal"]
+	path = themes/hugo-brutal
+	url = https://github.com/tomquirk/hugo-brutal
