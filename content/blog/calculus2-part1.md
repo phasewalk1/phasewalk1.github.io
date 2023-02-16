@@ -46,3 +46,5 @@ now with a function that describes the shells _height_ as we move through the so
 finally, we have two functions. one that describes our cylindrical shell's radius as it moves through the solid, and one that describes our shell's height. we can now evaluate the solid's volume by
 
 [$$ V = 2\pi\int_a^b R(x)h(x)\space dx $$]
+
+>> Note: __cylindrical shells__ integrate with respect to the opposite axis of rotation. i.e., when rotating about the _x_-axis, we integrate _dy_.
