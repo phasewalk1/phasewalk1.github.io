@@ -6,7 +6,8 @@ draft: false
 
 ## Welcome
 
-Welcome to my personal site where I share my interests and (sometimes) document things I'm currently working on.
+hi, i'm kat, and this is my personal site where i share things i'm interested in and occasionally document things i'm working on. if you'd like to learn a little about me, check out the _hello world_ blog post below, or feel free to check out my _github_ or _twitter_ to see what i'm up to recently!
 
- - [Hello World](blog/hello-world)
-
+- [hello world](blog/hello-world)
+- [twitter](https://twitter.com/prttyw1sh)
+- [github](https://github.com/phasewalk1)
