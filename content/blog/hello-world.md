@@ -36,3 +36,6 @@ to ensure the future is exciting and playful, i believe that one cannot simply e
 ### What You Can Expect Here
 
 **deepmeow** is my personal site with no strict posting schedule, or format, nor does it abide by any one topic. i've published this site on my github primarily as a means for new acquaintances to get to know me a little better; but also, to document interesting work i might find myself doing, or new things i may be learning. primarily, **deepmeow** will house blogs adjacent to _mathematics_ (pure and applied), _computer science_ (theory, data structures, programming languages, compilers, infra.), _systems_ (hardware, distributed systems), and reserves the right to post about any personal hobbies or interests in conjunction with more technical writings.
+
+$$
+$$
