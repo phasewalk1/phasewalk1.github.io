@@ -11,8 +11,6 @@ the first section of my Calculus II class is centered around integration. specif
 
 Calculus II sidesteps this problem of being a dimension short by a concept coined _Solids of Revolution_. these solids are true 3-dimensional objects, formed by rotating a 2-dimensional shape around a line or axis. this may seem confusing, considering we are still working on a 2-dimension plane; i've found that it helps me understand the concept better if i instead, imagine the _z_-axis as still being there, but that it's _invisible_ and thus, we do not need to define it explicitly nor worry about it at all.
 
-![Solid of Revolution Example](/4.jpg)
-
 ## Integration Methods for Finding the Volume of a Solid of Revolution
 
 ### Disk and Washer
