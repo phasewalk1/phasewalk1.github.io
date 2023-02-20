@@ -4,10 +4,11 @@ date: 2022-02-14T23:27:50+01:00
 draft: false
 ---
 
-## Welcome
-
-hi, i'm kat, and this is my personal site where i share things i'm interested in and occasionally document things i'm working on. if you'd like to learn a little about me, check out the _hello world_ blog post below, or feel free to check out my _github_ or _twitter_ to see what i'm up to recently!
-
-- [hello world](blog/hello-world)
-- [twitter](https://twitter.com/prttyw1sh)
-- [github](https://github.com/phasewalk1)
+## Looking for Documentation?
+* [nerva](https://docs.rs/voyager_client/0.3.6/nerva/) - A Rust crate implementing NASA Open API clients
+* [supra](https://phasewalk1.github.io/docsupra) - A lightweight kit for speeding up C++ development
+---
+## Connect
+{{< figure src="github.png" alt="Alt text" link="https://github.com/phasewalk1" width="30" height="30" resize="fill" >}} 
+{{< figure src="twitter.png" alt="Alt text" link="https://twitter.com/prttyw1sh" width="30" height="30" resize="fill" >}}
+___
