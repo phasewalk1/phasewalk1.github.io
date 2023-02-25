@@ -1,7 +1,7 @@
 ---
 title: "serde-filter (draft)"
 date: 2022-03-05T11:29:09+01:00
-draft: true
+draft: false
 summary: Generic filtering abstractions over json objects (built on top of serde_json::Value)
 ---
 
